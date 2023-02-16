@@ -11,21 +11,19 @@ import streamlit as st
 
 loaded_model= pickle.load(open("heart_disease_trained_model.sav",'rb'))
 
+
 def heart_disease_prediction(input_data):
-    input_data_as_np_array = np.array(input_data)
-    input_data_reshape = input_data_as_np_array.reshape(-1,1)
-    
+    input_data_as_np_array = np.asarray(input_data)
+    input_data_reshape = input_data_as_np_array.reshape(1,-1)
     prediction = loaded_model.predict(input_data_reshape)
     print(prediction)
-    
-    if(prediction==0):
-        return "The person doesnot have a heart disease"
-    
+    if(prediction[0] ==0):
+        return 'The person does not have a heart disease'
     else:
-        return "The person has a heart disease"
-
+        return 'The person has a heart disease'
+    
 def main():
-    st.title("Heart Disease Prediction web App")
+    st.title("Heart Disease Prediction")
     Age = st.text_input('Age')
     Sex = st.text_input('Sex (1->Male, 0->Female)')
     Cp = st.text_input('Chest Pain Type(0,1,2,3)')
@@ -39,12 +37,12 @@ def main():
     slope = st.text_input('The Slope of the peak exercise ST segment')
     ca = st.text_input('Number of major vessels (0-3) colored by flourosopy')
     thal = st.text_input('1 = Normal; 2 = Fixed defect; 3 = Reversable defect')
-    #variable for prediction
+    
+    #available for prediction
     diagnosis = ''
-    
-    if st.button("Test Result:"):
+    if st.button('Heart Disease Test Result:'):
         diagnosis = heart_disease_prediction([Age,Sex,Cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal])
+   
     st.success(diagnosis)
-    
-if __name__== "__main__":
+if __name__ == '__main__':
     main()
