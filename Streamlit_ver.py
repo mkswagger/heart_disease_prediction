@@ -40,7 +40,7 @@ def main():
     
     #available for prediction
     diagnosis = ''
-    if st.button('Heart Disease Test Result:'):
+    if st.button('Heart Disease Test Result'):
         diagnosis = heart_disease_prediction([Age,Sex,Cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal])
    
     st.success(diagnosis)
